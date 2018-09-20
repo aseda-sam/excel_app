@@ -6,11 +6,32 @@ class ItemsController < ApplicationController
   def index
     @items = Item.all
     respond_to do |format|
-    format.xlsx {
-      response.headers['Content-Disposition'] = "attachment; filename='items.xlsx'"
-    }
-    format.html { render :index }
+      format.xlsx {
+        response.headers['Content-Disposition'] = "attachment; filename='items.xlsx'"
+      }
+      format.html { render :index }
+    end
   end
+  
+  def import_from_excel
+    file = params[:file]
+    begin
+      # Retreive the extension of the file
+      file_ext = File.extname(file.original_filename)
+      raise "Unknown file type: #{file.original_filename}" unless [".xls", ".xlsx"].include?(file_ext)
+      spreadsheet = (file_ext == ".xls") ? Roo::Excel.new(file.path) : Roo::Excelx.new(file.path)
+      
+      
+      # header = spreadsheet.row(1)
+      (6..spreadsheet.last_row).each do |i|
+        Item.create(name: spreadsheet.row(i)[1], quantity: spreadsheet.row(i)[2])
+      end
+      flash[:notice] = "Records Imported"
+      redirect_to root_path 
+    rescue Exception => e
+      flash[:notice] = "Issues with file"
+      redirect_to root_path 
+    end
   end
 
   # GET /items/1
