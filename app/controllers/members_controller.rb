@@ -18,10 +18,10 @@ class MembersController < ApplicationController
       # Load Data
       (2..spreadsheet.last_row).each do |i|
         Member.create(
-          member_id: spreadsheet.row(i)[1], 
-          lastname: spreadsheet.row(i)[2],
-          firstname: spreadsheet.row(i)[3],
-          email: spreadsheet.row(i)[4]
+          member_id: spreadsheet.row(i)[0], 
+          lastname: spreadsheet.row(i)[1],
+          firstname: spreadsheet.row(i)[2],
+          email: spreadsheet.row(i)[3]
           )
       end
       flash[:notice] = "Records Imported"
@@ -81,7 +81,7 @@ class MembersController < ApplicationController
   def destroy
     @member.destroy
     respond_to do |format|
-      format.html { redirect_to members_url, notice: 'Member was successfully destroyed.' }
+      format.html { redirect_to members_url, notice: 'Member was successfully deleted.' }
       format.json { head :no_content }
     end
   end
