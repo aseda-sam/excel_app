@@ -17,7 +17,7 @@ class MembersTest < ApplicationSystemTestCase
     fill_in "Email", with: @member.email
     fill_in "Firstname", with: @member.firstname
     fill_in "Lastname", with: @member.lastname
-    fill_in "Student", with: @member.student_id
+    fill_in "Student", with: @member.member_id
     click_on "Create Member"
 
     assert_text "Member was successfully created"
@@ -31,7 +31,7 @@ class MembersTest < ApplicationSystemTestCase
     fill_in "Email", with: @member.email
     fill_in "Firstname", with: @member.firstname
     fill_in "Lastname", with: @member.lastname
-    fill_in "Student", with: @member.student_id
+    fill_in "Student", with: @member.member_id
     click_on "Update Member"
 
     assert_text "Member was successfully updated"
