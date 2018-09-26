@@ -1,4 +1,14 @@
 GIT
+  remote: https://github.com/activerecord-hackery/ransack.git
+  revision: c36d8b62f50a9aeef01426955870b379e76d74c4
+  specs:
+    ransack (2.0.1)
+      actionpack (>= 5.0)
+      activerecord (>= 5.0)
+      activesupport (>= 5.0)
+      i18n
+
+GIT
   remote: https://github.com/randym/axlsx.git
   revision: c8ac844572b25fda358cc01d2104720c4c42f450
   ref: c8ac844
@@ -262,6 +272,7 @@ DEPENDENCIES
   pg (~> 0.11)
   puma (~> 3.11)
   rails (~> 5.2.1)
+  ransack!
   roo (~> 2.7.0)
   rubyzip (>= 1.2.1)
   sass-rails (~> 5.0)

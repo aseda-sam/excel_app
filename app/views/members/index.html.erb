@@ -1,5 +1,26 @@
 <%= render 'members/import_from_excel' %>
 
+<!--Ransack's search_form_for helper-->
+
+<%= search_form_for @q, :html => { :class => "form-horizontal member" } do |f| %>
+
+  <!--Search if the name field contains...-->
+  <%= f.label "Search Name", :class => 'control-label col-lg-2' %>
+  <%= f.search_field :firstname_or_lastname_cont, :class => 'form-control', :placeholder => "Enter name" %>
+
+  <!--Search if an associated articles.title starts with...-->
+  <%#= f.label :articles_title_start %>
+  <%#= f.search_field :articles_title_start %>
+
+  <!--Attributes may be chained. Search multiple attributes for one value...-->
+  <%#= f.label :name_or_description_or_email_or_articles_title_cont %>
+  <%#= f.search_field :name_or_description_or_email_or_articles_title_cont %>
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+<% end %>
+
+<!--end-->
+
 <%- model_class = Member -%>
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
@@ -7,27 +28,30 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:member_id) %></th>
-      <th><%= model_class.human_attribute_name(:lastname) %></th>
-      <th><%= model_class.human_attribute_name(:firstname) %></th>
-      <th><%= model_class.human_attribute_name(:email) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <!--<th>ID</th>-->
+      <th>Member ID</th>
+      <th>Full Name</th>
+      <!--<th>Last Name</th>-->
+      <!--<th>First Name</th>-->
+      <th>Email</th>
+      <!--<th>Created at</th>-->
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
     <% @members.each do |member| %>
       <tr>
-        <td><%= link_to member.id, member_path(member) %></td>
-        <td><%= member.member_id %></td>
-        <td><%= member.lastname %></td>
-        <td><%= member.firstname %></td>
+        <!--<td><%#= link_to member.id, member_path(member) %></td>-->
+        <td><%= link_to member.member_id, member_path(member) %></td>
+        <td><%= member.full_name %></td>
+        <!--<td><%#= member.lastname %></td>-->
+        <!--<td><%#= member.firstname %></td>-->
         <td><%= member.email %></td>
-        <td><%=l member.created_at %></td>
+        <!--<td><%#=l member.created_at %></td>-->
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_member_path(member), :class => 'btn btn-default btn-xs' %>
+          <%= link_to "Show", member_path(member), :class => 'btn btn-xs btn-warning' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       member_path(member),
                       :method => :delete,

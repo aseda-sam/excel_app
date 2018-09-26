@@ -4,7 +4,11 @@ class MembersController < ApplicationController
   # GET /members
   # GET /members.json
   def index
-    @members = Member.all
+    # @members = Member.all
+    
+    @q = Member.ransack(params[:q])
+    @members = @q.result(distinct: true)
+    
   end
   
   def import_from_excel
